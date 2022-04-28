@@ -1,0 +1,13 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@8.0.0
+workflows:
+  build_and_push_image:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          filters:
+            branches:
+              only: main
+          context: dev
+          public-registry: true
+          repo: apj-demo-2
