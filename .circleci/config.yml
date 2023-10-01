@@ -4,6 +4,13 @@ orbs:
 workflows:
   build_and_push_image:
     jobs:
+      - aws-cli/setup:
+         role-arn: ${AWS_ROLE}
+         aws-region: "ap-southeast-1"
+         # optional parameters
+         role-session-name: “ci-session”
+         session-duration: 1800
+         context: dev
       - aws-ecr/build-and-push-image:
           filters:
             branches:
