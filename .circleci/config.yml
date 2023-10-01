@@ -1,21 +1,27 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@4.1.1
-  aws-ecr: circleci/aws-ecr@8.1.2
+  aws-ecr: circleci/aws-ecr@9.0.0
 workflows:
   build_and_push_image:
     jobs:
-      - aws-cli/setup:
-         role-arn: ${AWS_ROLE}
-         aws-region: "ap-southeast-1"
-         # optional parameters
-         role-session-name: “ci-session”
-         session-duration: 1800
-         context: dev
-      - aws-ecr/build-and-push-image:
+      - build_and_push_image:
           filters:
             branches:
               only: main
           context: dev
-          public-registry: true
+jobs:
+  build_and_push_image:
+    docker:
+      - image: ubuntu-2204:2023.07.2
+    steps:
+      - checkout
+      - aws-ecr/build_and_push_image:
+          public_registry: true
           repo: apj-demo-2
+          create_repo: true
+          region: ap-southeast-1
+          auth:
+            - aws-cli/setup:
+                role_arn: ${AWS_ROLE}
+
