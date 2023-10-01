@@ -12,8 +12,8 @@ workflows:
           context: dev
 jobs:
   build_and_push_image:
-    docker:
-      - image: docker:24.0.6-git
+    machine:
+      image: ubuntu-2204:2023.07.2
     steps:
       - checkout
       - aws-ecr/build_and_push_image:
