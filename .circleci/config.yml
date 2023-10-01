@@ -19,7 +19,6 @@ jobs:
       - aws-ecr/build_and_push_image:
           public_registry: true
           repo: apj-demo-2
-          create_repo: true
           region: ap-southeast-1
           auth:
             - aws-cli/setup:
